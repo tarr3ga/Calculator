@@ -161,7 +161,15 @@ namespace Calculator
 
         public static double Divide(double n1, double n2)
         {
-            return n1 / n2;
+            if(n2 == 0)
+            {
+                MessageBox.Show("Cannot divid by zero!", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                return 0;
+            } else
+            {
+                return n1 / n2;
+            }
+            
         }
     }
 }
