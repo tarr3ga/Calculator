@@ -8,6 +8,7 @@ namespace Calculator
     public partial class MainWindow : Window
     {
         double lastNumber, result;
+        SelectedOperator selectedOperator;
 
         public MainWindow()
         {
@@ -21,7 +22,28 @@ namespace Calculator
 
         private void EqualsButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            double newNumber;
+
+            if (double.TryParse(resultLabel.Content.ToString(), out newNumber))
+            {
+                switch (selectedOperator)
+                {
+                    case SelectedOperator.Addition:
+                        result = SimpleMath.Add(lastNumber, newNumber);
+                        break;
+                    case SelectedOperator.Subtraction:
+                        result = SimpleMath.Subtract(lastNumber, newNumber);
+                        break;
+                    case SelectedOperator.Multiplication:
+                        result = SimpleMath.Multiply(lastNumber, newNumber);
+                        break;
+                    case SelectedOperator.Division:
+                        result = SimpleMath.Divide(lastNumber, newNumber);
+                        break;
+                }
+
+                resultLabel.Content = result.ToString();
+            }
         }
 
         private void PercentButton_Click(object sender, RoutedEventArgs e)
@@ -53,6 +75,20 @@ namespace Calculator
             {
                 resultLabel.Content = "0";
             }
+
+            if (sender == multplyButton)
+                selectedOperator = SelectedOperator.Multiplication;
+            if (sender == dividedButton)
+                selectedOperator = SelectedOperator.Division;
+            if (sender == plusButton)
+                selectedOperator = SelectedOperator.Addition;
+            if (sender == minusButton)
+                selectedOperator = SelectedOperator.Subtraction;
+        }
+
+        private void dotButton_Click(object sender, RoutedEventArgs e)
+        {
+            resultLabel.Content = $"{resultLabel.Content}.";
         }
 
         private void NumberButton_Click(object sender, RoutedEventArgs e)
@@ -88,6 +124,37 @@ namespace Calculator
             {
                 resultLabel.Content = $"{resultLabel.Content}{selectedValue}";
             }
+        }
+    }
+
+    public enum SelectedOperator
+    {
+        Addition,
+        Subtraction,
+        Multiplication,
+        Division
+    }
+
+    public class SimpleMath
+    {
+        public static double Add(double n1, double n2)
+        {
+            return n1 + n2;
+        }
+
+        public static double Subtract(double n1, double n2)
+        {
+            return n1 - n2;
+        }
+
+        public static double Multiply(double n1, double n2)
+        {
+            return n1 * n2;
+        }
+
+        public static double Divide(double n1, double n2)
+        {
+            return n1 / n2;
         }
     }
 }
