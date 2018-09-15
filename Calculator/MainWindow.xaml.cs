@@ -88,7 +88,14 @@ namespace Calculator
 
         private void dotButton_Click(object sender, RoutedEventArgs e)
         {
-            resultLabel.Content = $"{resultLabel.Content}.";
+            if(resultLabel.Content.ToString().Contains("."))
+            {
+                //DO NOTHING
+            }
+            else
+            {
+                resultLabel.Content = $"{resultLabel.Content}.";
+            }           
         }
 
         private void NumberButton_Click(object sender, RoutedEventArgs e)
